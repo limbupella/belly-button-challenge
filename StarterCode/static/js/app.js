@@ -13,36 +13,31 @@ let otuIds = [];
 let otuLabels = [];
 
 for (let i=0; i < samples.length; i++) {
-  if (i == 0) {
-  let values = samples.sampleValues;
-  let ids = samples.otuIds;
-  let labels = samples.otuLabels;
-  } }
-sampleValues.push(values);
-otuIds.push(ids);
-otuLabels.push(labels);
-  });
+  sampleValues.push(samples[i].sampleValues);
+  otuIds.push(samples[i].otuIds);
+ otuLabels.push(samples.otuLabels);
+  } 
 let trace1 = {
-        // Use sample_values as the values for the bar chart.
-        x: Values,
-        // Use otu_ids as the labels for the bar chart.
-        y: OtuIds,
-        // Use otu_labels as the hovertext for the chart.
-        text: init_barOtuLabels,
+        x: sampleValues,
+        y: otuIds,
+        text: otuLabels,
         type: 'bar',
         orientation: 'h',
         hoverinfo: 'text+x'
     };
+
     //Data trace array
     let sampleData = [trace1];
     //Apply a title to the layout
     let layout = {
-        title: 'Top 10 OTUs Found in an Individual',
+        title: 'Top 10 OTUs Found',
         xaxis: { title: 'Sample Values' },
         yaxis: { title: 'OTU ID'}
     };
     //Plot the bar chart
     Plotly.newPlot('bar', sampleData, layout); 
+
+  });
   
 
 
