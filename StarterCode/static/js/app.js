@@ -7,19 +7,38 @@ d3.json(url).then(function(data) {
 // Process the data to get required values and labels
 
 let samples = data.samples;
+let bar_values = {};
 
 let sampleValues = [];
 let otuIds = [];
 let otuLabels = [];
 
+let sampleValues_10 = [];
+let otuIds_10 = [];
+let otuLabels_10 = [];
+
+
 for (let i=0; i < samples.length; i++) {
-  sampleValues.push(samples[i].sampleValues);
-  otuIds.push(samples[i].otuIds);
- otuLabels.push(samples.otuLabels);
+  if (i == 0) {
+
+    let sampleValues = samples[i].sample_values;
+    let otuIds = samples[i].otu_ids;
+    let otuLabels = samples[i].otu_labels;
+
+    let sampleValues_10 = sampleValues.slice(0, 10).reverse;
+    let otuIds_10 = otuIds.slice(0, 10);
+    let otuLabels_10 = otuLabels.slice(0, 10).reverse;
+
+    id_bad[samples[i].id] = [sampleValues_10,otuIds_10,otuLabels_10];
+    
+  // sampleValues.push(samples[i].sampleValues);
+  // otuIds.push(samples[i].otuIds);
+  // otuLabels.push(samples.otuLabels);
   } 
+  function init() {
 let trace1 = {
-        x: sampleValues,
-        y: otuIds,
+        x: sampleValues_10,
+        y: otuLabels_10.map(id => `OTU ${id}`).reverse(),
         text: otuLabels,
         type: 'bar',
         orientation: 'h',
@@ -36,8 +55,7 @@ let trace1 = {
     };
     //Plot the bar chart
     Plotly.newPlot('bar', sampleData, layout); 
-
-  });
-  
-
+  }
+}
+});
 
